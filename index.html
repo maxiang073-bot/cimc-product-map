@@ -1,0 +1,673 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIMC Vehicles - 海外产品电子图谱</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: "Microsoft YaHei", sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 { text-align: center; color: #eee; margin-bottom: 30px; }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 15px;
+            max-width: 1900px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: #2d2d2d;
+            border: 1px solid #444;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover { transform: scale(1.03); border-color: #007bff; z-index: 10; }
+        
+        .card-img-wrapper {
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 比例占位 */
+            position: relative;
+            background: #fff;
+        }
+        .card img {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: contain;
+        }
+        
+        .card-title {
+            padding: 10px 5px;
+            font-size: 13px;
+            text-align: center;
+            color: #ddd;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #2d2d2d;
+            border-top: 1px solid #333;
+        }
+
+        /* 弹窗样式 */
+        .modal {
+            display: none; position: fixed; z-index: 100; left: 0; top: 0;
+            width: 100%; height: 100%; background-color: rgba(0,0,0,0.9);
+            overflow-y: auto;
+        }
+        .modal-content {
+            background-color: #2d2d2d; margin: 3% auto; padding: 25px;
+            border: 1px solid #555; width: 60%; max-width: 800px;
+            border-radius: 8px; position: relative;
+        }
+        .close {
+            position: absolute; right: 20px; top: 15px;
+            color: #aaa; font-size: 30px; cursor: pointer;
+        }
+        
+        .edit-group { margin-bottom: 15px; }
+        .edit-label { display: block; color: #888; margin-bottom: 5px; font-size: 12px; }
+        input[type="text"], textarea {
+            width: 100%; padding: 10px; background: #1a1a1a;
+            color: #fff; border: 1px solid #555; border-radius: 4px;
+            box-sizing: border-box; font-size: 14px;
+        }
+        .modal-img-preview {
+            width: 100%; max-height: 400px; object-fit: contain;
+            background: #fff; margin-bottom: 15px; border-radius: 4px;
+        }
+        
+        .btn-bar { display: flex; gap: 10px; margin-top: 20px; }
+        button { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; }
+        .btn-save { background-color: #007bff; color: white; flex: 2; }
+        .btn-reset { background-color: #dc3545; color: white; flex: 1; }
+        .btn-upload { background-color: #6c757d; color: white; position: relative; overflow: hidden; }
+        input[type="file"] { position: absolute; left:0; top:0; opacity:0; width:100%; height:100%; cursor: pointer; }
+
+        @media (max-width: 1200px) { .grid-container { grid-template-columns: repeat(4, 1fr); } }
+        @media (max-width: 768px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body>
+
+    <h1>CIMC Vehicles - 海外产品电子图谱</h1>
+    <div class="grid-container">
+
+        <div class="card" onclick="openModal('11.5m Lowbed.png', '20' Container Chassis')">
+            <div class="card-img-wrapper">
+                <img id="img_11.5m Lowbed.png" src="haiwai/11.5m Lowbed.png" loading="lazy">
+            </div>
+            <div id="title_11.5m Lowbed.png" class="card-title">20' Container Chassis</div>
+        </div>
+        
+        <div class="card" onclick="openModal('11.7m Lowbed.png', '20' Container Chassis')">
+            <div class="card-img-wrapper">
+                <img id="img_11.7m Lowbed.png" src="haiwai/11.7m Lowbed.png" loading="lazy">
+            </div>
+            <div id="title_11.7m Lowbed.png" class="card-title">20' Container Chassis</div>
+        </div>
+        
+        <div class="card" onclick="openModal('11m Curtain Sider.png', '40' Container Chassis')">
+            <div class="card-img-wrapper">
+                <img id="img_11m Curtain Sider.png" src="haiwai/11m Curtain Sider.png" loading="lazy">
+            </div>
+            <div id="title_11m Curtain Sider.png" class="card-title">40' Container Chassis</div>
+        </div>
+        
+        <div class="card" onclick="openModal('12.2m Flatbed.png', '40' Container Chassis')">
+            <div class="card-img-wrapper">
+                <img id="img_12.2m Flatbed.png" src="haiwai/12.2m Flatbed.png" loading="lazy">
+            </div>
+            <div id="title_12.2m Flatbed.png" class="card-title">40' Container Chassis</div>
+        </div>
+        
+        <div class="card" onclick="openModal('12.4m Flatbed.png', '40' Container Chassis')">
+            <div class="card-img-wrapper">
+                <img id="img_12.4m Flatbed.png" src="haiwai/12.4m Flatbed.png" loading="lazy">
+            </div>
+            <div id="title_12.4m Flatbed.png" class="card-title">40' Container Chassis</div>
+        </div>
+        
+        <div class="card" onclick="openModal('12.4m High Wall.png', '40' Container Chassis')">
+            <div class="card-img-wrapper">
+                <img id="img_12.4m High Wall.png" src="haiwai/12.4m High Wall.png" loading="lazy">
+            </div>
+            <div id="title_12.4m High Wall.png" class="card-title">40' Container Chassis</div>
+        </div>
+        
+        <div class="card" onclick="openModal('12.5m Curtain Sider.png', '40-45' Extendable Container Chassis')">
+            <div class="card-img-wrapper">
+                <img id="img_12.5m Curtain Sider.png" src="haiwai/12.5m Curtain Sider.png" loading="lazy">
+            </div>
+            <div id="title_12.5m Curtain Sider.png" class="card-title">40-45' Extendable Container Chassis</div>
+        </div>
+        
+        <div class="card" onclick="openModal('12.5m Dropside.png', '45' Terminal Container Chassis')">
+            <div class="card-img-wrapper">
+                <img id="img_12.5m Dropside.png" src="haiwai/12.5m Dropside.png" loading="lazy">
+            </div>
+            <div id="title_12.5m Dropside.png" class="card-title">45' Terminal Container Chassis</div>
+        </div>
+        
+        <div class="card" onclick="openModal('12.5m High Wall.png', '12.2m Flatbed')">
+            <div class="card-img-wrapper">
+                <img id="img_12.5m High Wall.png" src="haiwai/12.5m High Wall.png" loading="lazy">
+            </div>
+            <div id="title_12.5m High Wall.png" class="card-title">12.2m Flatbed</div>
+        </div>
+        
+        <div class="card" onclick="openModal('12.5m High Wall_2.png', '12.4m Flatbed')">
+            <div class="card-img-wrapper">
+                <img id="img_12.5m High Wall_2.png" src="haiwai/12.5m High Wall_2.png" loading="lazy">
+            </div>
+            <div id="title_12.5m High Wall_2.png" class="card-title">12.4m Flatbed</div>
+        </div>
+        
+        <div class="card" onclick="openModal('12.5m High Wall_3.png', '13.6m Flatbed With Stake')">
+            <div class="card-img-wrapper">
+                <img id="img_12.5m High Wall_3.png" src="haiwai/12.5m High Wall_3.png" loading="lazy">
+            </div>
+            <div id="title_12.5m High Wall_3.png" class="card-title">13.6m Flatbed With Stake</div>
+        </div>
+        
+        <div class="card" onclick="openModal('12.5m High Wall_4.png', '13m Flatbed')">
+            <div class="card-img-wrapper">
+                <img id="img_12.5m High Wall_4.png" src="haiwai/12.5m High Wall_4.png" loading="lazy">
+            </div>
+            <div id="title_12.5m High Wall_4.png" class="card-title">13m Flatbed</div>
+        </div>
+        
+        <div class="card" onclick="openModal('12m Lowbed.png', '15m Flatbed')">
+            <div class="card-img-wrapper">
+                <img id="img_12m Lowbed.png" src="haiwai/12m Lowbed.png" loading="lazy">
+            </div>
+            <div id="title_12m Lowbed.png" class="card-title">15m Flatbed</div>
+        </div>
+        
+        <div class="card" onclick="openModal('13.2m Lowbed.png', '16.5m Superlink Flatbed')">
+            <div class="card-img-wrapper">
+                <img id="img_13.2m Lowbed.png" src="haiwai/13.2m Lowbed.png" loading="lazy">
+            </div>
+            <div id="title_13.2m Lowbed.png" class="card-title">16.5m Superlink Flatbed</div>
+        </div>
+        
+        <div class="card" onclick="openModal('13.5m Dropside.png', '18m Superlink Flatbed')">
+            <div class="card-img-wrapper">
+                <img id="img_13.5m Dropside.png" src="haiwai/13.5m Dropside.png" loading="lazy">
+            </div>
+            <div id="title_13.5m Dropside.png" class="card-title">18m Superlink Flatbed</div>
+        </div>
+        
+        <div class="card" onclick="openModal('13.6m Curtain Sider.png', '29m Superlink Flatbed')">
+            <div class="card-img-wrapper">
+                <img id="img_13.6m Curtain Sider.png" src="haiwai/13.6m Curtain Sider.png" loading="lazy">
+            </div>
+            <div id="title_13.6m Curtain Sider.png" class="card-title">29m Superlink Flatbed</div>
+        </div>
+        
+        <div class="card" onclick="openModal('13.6m Curtain Sider_2.png', '12.5m Dropside')">
+            <div class="card-img-wrapper">
+                <img id="img_13.6m Curtain Sider_2.png" src="haiwai/13.6m Curtain Sider_2.png" loading="lazy">
+            </div>
+            <div id="title_13.6m Curtain Sider_2.png" class="card-title">12.5m Dropside</div>
+        </div>
+        
+        <div class="card" onclick="openModal('13.6m Flatbed With Stake.png', '13m Dropside')">
+            <div class="card-img-wrapper">
+                <img id="img_13.6m Flatbed With Stake.png" src="haiwai/13.6m Flatbed With Stake.png" loading="lazy">
+            </div>
+            <div id="title_13.6m Flatbed With Stake.png" class="card-title">13m Dropside</div>
+        </div>
+        
+        <div class="card" onclick="openModal('13.6m Refrigerated Semitrailer.png', '13m Dropside')">
+            <div class="card-img-wrapper">
+                <img id="img_13.6m Refrigerated Semitrailer.png" src="haiwai/13.6m Refrigerated Semitrailer.png" loading="lazy">
+            </div>
+            <div id="title_13.6m Refrigerated Semitrailer.png" class="card-title">13m Dropside</div>
+        </div>
+        
+        <div class="card" onclick="openModal('13.6m Refrigerated Semitrailer_2.png', '13.5m Dropside')">
+            <div class="card-img-wrapper">
+                <img id="img_13.6m Refrigerated Semitrailer_2.png" src="haiwai/13.6m Refrigerated Semitrailer_2.png" loading="lazy">
+            </div>
+            <div id="title_13.6m Refrigerated Semitrailer_2.png" class="card-title">13.5m Dropside</div>
+        </div>
+        
+        <div class="card" onclick="openModal('13.75m Curtain Sider.png', '14m Dropside')">
+            <div class="card-img-wrapper">
+                <img id="img_13.75m Curtain Sider.png" src="haiwai/13.75m Curtain Sider.png" loading="lazy">
+            </div>
+            <div id="title_13.75m Curtain Sider.png" class="card-title">14m Dropside</div>
+        </div>
+        
+        <div class="card" onclick="openModal('13.75m Curtain Sider_2.png', '13m Dropside')">
+            <div class="card-img-wrapper">
+                <img id="img_13.75m Curtain Sider_2.png" src="haiwai/13.75m Curtain Sider_2.png" loading="lazy">
+            </div>
+            <div id="title_13.75m Curtain Sider_2.png" class="card-title">13m Dropside</div>
+        </div>
+        
+        <div class="card" onclick="openModal('13.75m Curtain Sider_3.png', '21m Superlink Dropside')">
+            <div class="card-img-wrapper">
+                <img id="img_13.75m Curtain Sider_3.png" src="haiwai/13.75m Curtain Sider_3.png" loading="lazy">
+            </div>
+            <div id="title_13.75m Curtain Sider_3.png" class="card-title">21m Superlink Dropside</div>
+        </div>
+        
+        <div class="card" onclick="openModal('13.75m Lowbed.png', '29m Superlink Dropside')">
+            <div class="card-img-wrapper">
+                <img id="img_13.75m Lowbed.png" src="haiwai/13.75m Lowbed.png" loading="lazy">
+            </div>
+            <div id="title_13.75m Lowbed.png" class="card-title">29m Superlink Dropside</div>
+        </div>
+        
+        <div class="card" onclick="openModal('13.75m Lowbed_2.png', '12.4m High Wall')">
+            <div class="card-img-wrapper">
+                <img id="img_13.75m Lowbed_2.png" src="haiwai/13.75m Lowbed_2.png" loading="lazy">
+            </div>
+            <div id="title_13.75m Lowbed_2.png" class="card-title">12.4m High Wall</div>
+        </div>
+        
+        <div class="card" onclick="openModal('13m Dropside.png', '12.5m High Wall')">
+            <div class="card-img-wrapper">
+                <img id="img_13m Dropside.png" src="haiwai/13m Dropside.png" loading="lazy">
+            </div>
+            <div id="title_13m Dropside.png" class="card-title">12.5m High Wall</div>
+        </div>
+        
+        <div class="card" onclick="openModal('13m Dropside_2.png', '12.5m High Wall')">
+            <div class="card-img-wrapper">
+                <img id="img_13m Dropside_2.png" src="haiwai/13m Dropside_2.png" loading="lazy">
+            </div>
+            <div id="title_13m Dropside_2.png" class="card-title">12.5m High Wall</div>
+        </div>
+        
+        <div class="card" onclick="openModal('13m Dropside_3.png', '12.5m High Wall')">
+            <div class="card-img-wrapper">
+                <img id="img_13m Dropside_3.png" src="haiwai/13m Dropside_3.png" loading="lazy">
+            </div>
+            <div id="title_13m Dropside_3.png" class="card-title">12.5m High Wall</div>
+        </div>
+        
+        <div class="card" onclick="openModal('13m Dry Van.png', '12.5m High Wall')">
+            <div class="card-img-wrapper">
+                <img id="img_13m Dry Van.png" src="haiwai/13m Dry Van.png" loading="lazy">
+            </div>
+            <div id="title_13m Dry Van.png" class="card-title">12.5m High Wall</div>
+        </div>
+        
+        <div class="card" onclick="openModal('13m Dry Van_2.png', '13m High Wall')">
+            <div class="card-img-wrapper">
+                <img id="img_13m Dry Van_2.png" src="haiwai/13m Dry Van_2.png" loading="lazy">
+            </div>
+            <div id="title_13m Dry Van_2.png" class="card-title">13m High Wall</div>
+        </div>
+        
+        <div class="card" onclick="openModal('13m Flatbed.png', '14m High Wall')">
+            <div class="card-img-wrapper">
+                <img id="img_13m Flatbed.png" src="haiwai/13m Flatbed.png" loading="lazy">
+            </div>
+            <div id="title_13m Flatbed.png" class="card-title">14m High Wall</div>
+        </div>
+        
+        <div class="card" onclick="openModal('13m High Wall.png', '14m High Wall')">
+            <div class="card-img-wrapper">
+                <img id="img_13m High Wall.png" src="haiwai/13m High Wall.png" loading="lazy">
+            </div>
+            <div id="title_13m High Wall.png" class="card-title">14m High Wall</div>
+        </div>
+        
+        <div class="card" onclick="openModal('13m Lowbed.png', '11.5m Lowbed')">
+            <div class="card-img-wrapper">
+                <img id="img_13m Lowbed.png" src="haiwai/13m Lowbed.png" loading="lazy">
+            </div>
+            <div id="title_13m Lowbed.png" class="card-title">11.5m Lowbed</div>
+        </div>
+        
+        <div class="card" onclick="openModal('14m Dropside.png', '13m Lowbed')">
+            <div class="card-img-wrapper">
+                <img id="img_14m Dropside.png" src="haiwai/14m Dropside.png" loading="lazy">
+            </div>
+            <div id="title_14m Dropside.png" class="card-title">13m Lowbed</div>
+        </div>
+        
+        <div class="card" onclick="openModal('14m High Wall.png', '12m Lowbed')">
+            <div class="card-img-wrapper">
+                <img id="img_14m High Wall.png" src="haiwai/14m High Wall.png" loading="lazy">
+            </div>
+            <div id="title_14m High Wall.png" class="card-title">12m Lowbed</div>
+        </div>
+        
+        <div class="card" onclick="openModal('14m High Wall_2.png', '13.75m Lowbed')">
+            <div class="card-img-wrapper">
+                <img id="img_14m High Wall_2.png" src="haiwai/14m High Wall_2.png" loading="lazy">
+            </div>
+            <div id="title_14m High Wall_2.png" class="card-title">13.75m Lowbed</div>
+        </div>
+        
+        <div class="card" onclick="openModal('14m Lowbed.png', '13.2m Lowbed')">
+            <div class="card-img-wrapper">
+                <img id="img_14m Lowbed.png" src="haiwai/14m Lowbed.png" loading="lazy">
+            </div>
+            <div id="title_14m Lowbed.png" class="card-title">13.2m Lowbed</div>
+        </div>
+        
+        <div class="card" onclick="openModal('15m Flatbed.png', '11.7m Lowbed')">
+            <div class="card-img-wrapper">
+                <img id="img_15m Flatbed.png" src="haiwai/15m Flatbed.png" loading="lazy">
+            </div>
+            <div id="title_15m Flatbed.png" class="card-title">11.7m Lowbed</div>
+        </div>
+        
+        <div class="card" onclick="openModal('16.4m Curtain Sider.png', '13.75m Lowbed')">
+            <div class="card-img-wrapper">
+                <img id="img_16.4m Curtain Sider.png" src="haiwai/16.4m Curtain Sider.png" loading="lazy">
+            </div>
+            <div id="title_16.4m Curtain Sider.png" class="card-title">13.75m Lowbed</div>
+        </div>
+        
+        <div class="card" onclick="openModal('16.5m Superlink Flatbed.png', '14m Lowbed')">
+            <div class="card-img-wrapper">
+                <img id="img_16.5m Superlink Flatbed.png" src="haiwai/16.5m Superlink Flatbed.png" loading="lazy">
+            </div>
+            <div id="title_16.5m Superlink Flatbed.png" class="card-title">14m Lowbed</div>
+        </div>
+        
+        <div class="card" onclick="openModal('16m Dry Van.png', '13.6m Curtain Sider')">
+            <div class="card-img-wrapper">
+                <img id="img_16m Dry Van.png" src="haiwai/16m Dry Van.png" loading="lazy">
+            </div>
+            <div id="title_16m Dry Van.png" class="card-title">13.6m Curtain Sider</div>
+        </div>
+        
+        <div class="card" onclick="openModal('18m Superlink Flatbed.png', '13.6m Curtain Sider')">
+            <div class="card-img-wrapper">
+                <img id="img_18m Superlink Flatbed.png" src="haiwai/18m Superlink Flatbed.png" loading="lazy">
+            </div>
+            <div id="title_18m Superlink Flatbed.png" class="card-title">13.6m Curtain Sider</div>
+        </div>
+        
+        <div class="card" onclick="openModal('19m Superlink Dry Van.png', '13.75m Curtain Sider')">
+            <div class="card-img-wrapper">
+                <img id="img_19m Superlink Dry Van.png" src="haiwai/19m Superlink Dry Van.png" loading="lazy">
+            </div>
+            <div id="title_19m Superlink Dry Van.png" class="card-title">13.75m Curtain Sider</div>
+        </div>
+        
+        <div class="card" onclick="openModal('20 Container Chassis.png', '13.75m Curtain Sider')">
+            <div class="card-img-wrapper">
+                <img id="img_20 Container Chassis.png" src="haiwai/20 Container Chassis.png" loading="lazy">
+            </div>
+            <div id="title_20 Container Chassis.png" class="card-title">13.75m Curtain Sider</div>
+        </div>
+        
+        <div class="card" onclick="openModal('20 Container Chassis_2.png', '11m Curtain Sider')">
+            <div class="card-img-wrapper">
+                <img id="img_20 Container Chassis_2.png" src="haiwai/20 Container Chassis_2.png" loading="lazy">
+            </div>
+            <div id="title_20 Container Chassis_2.png" class="card-title">11m Curtain Sider</div>
+        </div>
+        
+        <div class="card" onclick="openModal('20.5m Superlink Dry Van.png', '13.75m Curtain Sider')">
+            <div class="card-img-wrapper">
+                <img id="img_20.5m Superlink Dry Van.png" src="haiwai/20.5m Superlink Dry Van.png" loading="lazy">
+            </div>
+            <div id="title_20.5m Superlink Dry Van.png" class="card-title">13.75m Curtain Sider</div>
+        </div>
+        
+        <div class="card" onclick="openModal('21m Dry Van.png', '12.5m Curtain Sider')">
+            <div class="card-img-wrapper">
+                <img id="img_21m Dry Van.png" src="haiwai/21m Dry Van.png" loading="lazy">
+            </div>
+            <div id="title_21m Dry Van.png" class="card-title">12.5m Curtain Sider</div>
+        </div>
+        
+        <div class="card" onclick="openModal('21m Superlink Dropside.png', '16.4m Curtain Sider')">
+            <div class="card-img-wrapper">
+                <img id="img_21m Superlink Dropside.png" src="haiwai/21m Superlink Dropside.png" loading="lazy">
+            </div>
+            <div id="title_21m Superlink Dropside.png" class="card-title">16.4m Curtain Sider</div>
+        </div>
+        
+        <div class="card" onclick="openModal('24m3 Tipper.png', '13m Dry Van')">
+            <div class="card-img-wrapper">
+                <img id="img_24m3 Tipper.png" src="haiwai/24m3 Tipper.png" loading="lazy">
+            </div>
+            <div id="title_24m3 Tipper.png" class="card-title">13m Dry Van</div>
+        </div>
+        
+        <div class="card" onclick="openModal('29m Superlink Dropside.png', '13m Dry Van')">
+            <div class="card-img-wrapper">
+                <img id="img_29m Superlink Dropside.png" src="haiwai/29m Superlink Dropside.png" loading="lazy">
+            </div>
+            <div id="title_29m Superlink Dropside.png" class="card-title">13m Dry Van</div>
+        </div>
+        
+        <div class="card" onclick="openModal('29m Superlink Flatbed.png', '16m Dry Van')">
+            <div class="card-img-wrapper">
+                <img id="img_29m Superlink Flatbed.png" src="haiwai/29m Superlink Flatbed.png" loading="lazy">
+            </div>
+            <div id="title_29m Superlink Flatbed.png" class="card-title">16m Dry Van</div>
+        </div>
+        
+        <div class="card" onclick="openModal('33m3 Tipper.png', '21m Dry Van')">
+            <div class="card-img-wrapper">
+                <img id="img_33m3 Tipper.png" src="haiwai/33m3 Tipper.png" loading="lazy">
+            </div>
+            <div id="title_33m3 Tipper.png" class="card-title">21m Dry Van</div>
+        </div>
+        
+        <div class="card" onclick="openModal('40 Container Chassis.png', '20.5m Superlink Dry Van')">
+            <div class="card-img-wrapper">
+                <img id="img_40 Container Chassis.png" src="haiwai/40 Container Chassis.png" loading="lazy">
+            </div>
+            <div id="title_40 Container Chassis.png" class="card-title">20.5m Superlink Dry Van</div>
+        </div>
+        
+        <div class="card" onclick="openModal('40 Container Chassis_2.png', '19m Superlink Dry Van')">
+            <div class="card-img-wrapper">
+                <img id="img_40 Container Chassis_2.png" src="haiwai/40 Container Chassis_2.png" loading="lazy">
+            </div>
+            <div id="title_40 Container Chassis_2.png" class="card-title">19m Superlink Dry Van</div>
+        </div>
+        
+        <div class="card" onclick="openModal('40 Container Chassis_3.png', '13.6m Refrigerated Semitrailer')">
+            <div class="card-img-wrapper">
+                <img id="img_40 Container Chassis_3.png" src="haiwai/40 Container Chassis_3.png" loading="lazy">
+            </div>
+            <div id="title_40 Container Chassis_3.png" class="card-title">13.6m Refrigerated Semitrailer</div>
+        </div>
+        
+        <div class="card" onclick="openModal('40 Container Chassis_4.png', '13.6m Refrigerated Semitrailer')">
+            <div class="card-img-wrapper">
+                <img id="img_40 Container Chassis_4.png" src="haiwai/40 Container Chassis_4.png" loading="lazy">
+            </div>
+            <div id="title_40 Container Chassis_4.png" class="card-title">13.6m Refrigerated Semitrailer</div>
+        </div>
+        
+        <div class="card" onclick="openModal('40-45 Extendable Container Chassis.png', '24m3 Tipper')">
+            <div class="card-img-wrapper">
+                <img id="img_40-45 Extendable Container Chassis.png" src="haiwai/40-45 Extendable Container Chassis.png" loading="lazy">
+            </div>
+            <div id="title_40-45 Extendable Container Chassis.png" class="card-title">24m3 Tipper</div>
+        </div>
+        
+        <div class="card" onclick="openModal('40m3 Drawbar Tipper.png', '33m3 Tipper')">
+            <div class="card-img-wrapper">
+                <img id="img_40m3 Drawbar Tipper.png" src="haiwai/40m3 Drawbar Tipper.png" loading="lazy">
+            </div>
+            <div id="title_40m3 Drawbar Tipper.png" class="card-title">33m3 Tipper</div>
+        </div>
+        
+        <div class="card" onclick="openModal('40m3 Tipper.png', '40m3 Tipper')">
+            <div class="card-img-wrapper">
+                <img id="img_40m3 Tipper.png" src="haiwai/40m3 Tipper.png" loading="lazy">
+            </div>
+            <div id="title_40m3 Tipper.png" class="card-title">40m3 Tipper</div>
+        </div>
+        
+        <div class="card" onclick="openModal('45 Terminal Container Chassis.png', '50m3 Tipper')">
+            <div class="card-img-wrapper">
+                <img id="img_45 Terminal Container Chassis.png" src="haiwai/45 Terminal Container Chassis.png" loading="lazy">
+            </div>
+            <div id="title_45 Terminal Container Chassis.png" class="card-title">50m3 Tipper</div>
+        </div>
+        
+        <div class="card" onclick="openModal('45m3 Supperlink Tipper.png', '40m3 Drawbar Tipper')">
+            <div class="card-img-wrapper">
+                <img id="img_45m3 Supperlink Tipper.png" src="haiwai/45m3 Supperlink Tipper.png" loading="lazy">
+            </div>
+            <div id="title_45m3 Supperlink Tipper.png" class="card-title">40m3 Drawbar Tipper</div>
+        </div>
+        
+        <div class="card" onclick="openModal('50m3 Tipper.png', '45m3 Supperlink Tipper')">
+            <div class="card-img-wrapper">
+                <img id="img_50m3 Tipper.png" src="haiwai/50m3 Tipper.png" loading="lazy">
+            </div>
+            <div id="title_50m3 Tipper.png" class="card-title">45m3 Supperlink Tipper</div>
+        </div>
+        
+        <div class="card" onclick="openModal('Log Trailer.png', 'Steel Ladle Trailer')">
+            <div class="card-img-wrapper">
+                <img id="img_Log Trailer.png" src="haiwai/Log Trailer.png" loading="lazy">
+            </div>
+            <div id="title_Log Trailer.png" class="card-title">Steel Ladle Trailer</div>
+        </div>
+        
+        <div class="card" onclick="openModal('Steel Ladle Trailer.png', 'Log Trailer')">
+            <div class="card-img-wrapper">
+                <img id="img_Steel Ladle Trailer.png" src="haiwai/Steel Ladle Trailer.png" loading="lazy">
+            </div>
+            <div id="title_Steel Ladle Trailer.png" class="card-title">Log Trailer</div>
+        </div>
+        
+    </div>
+
+    <!-- 弹窗 -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modalImg" class="modal-img-preview" src="">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <button class="btn-upload">
+                    📷 更换图片
+                    <input type="file" id="fileInput" accept="image/*" onchange="handleImageUpload(this)">
+                </button>
+            </div>
+            <div class="edit-group">
+                <span class="edit-label">车型名称 (重命名)</span>
+                <input type="text" id="modalTitleInput">
+            </div>
+            <div class="edit-group">
+                <span class="edit-label">产品介绍 / 备注</span>
+                <textarea id="modalDesc" rows="5"></textarea>
+            </div>
+            <div class="btn-bar">
+                <button class="btn-reset" onclick="resetCard()">↺ 恢复默认</button>
+                <button class="btn-save" onclick="saveData()">💾 保存修改</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentFile = "";
+        let newImageBase64 = null;
+
+        window.onload = function() {
+            // 页面加载时恢复保存的数据
+            const allCards = document.querySelectorAll('.card');
+            document.querySelectorAll('[id^="title_"]').forEach(el => {
+                let fname = el.id.replace('title_', '');
+                
+                let savedTitle = localStorage.getItem(fname + '_title');
+                if(savedTitle) el.innerText = savedTitle;
+
+                let savedImg = localStorage.getItem(fname + '_img');
+                if(savedImg) document.getElementById('img_' + fname).src = savedImg;
+            });
+        }
+
+        function openModal(filename, defaultTitle) {
+            currentFile = filename;
+            newImageBase64 = null;
+
+            let savedTitle = localStorage.getItem(filename + '_title');
+            let savedDesc = localStorage.getItem(filename + '_desc');
+            let savedImg = localStorage.getItem(filename + '_img');
+
+            // 优先显示保存过的名字，没有则显示默认的名字（列表里的正确名字）
+            document.getElementById('modalTitleInput').value = savedTitle ? savedTitle : defaultTitle;
+            document.getElementById('modalDesc').value = savedDesc ? savedDesc : "";
+            
+            if(savedImg) {
+                document.getElementById('modalImg').src = savedImg;
+            } else {
+                document.getElementById('modalImg').src = "{image_folder}/" + filename;
+            }
+
+            document.getElementById('myModal').style.display = "block";
+        }
+
+        function handleImageUpload(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    newImageBase64 = e.target.result; 
+                    document.getElementById('modalImg').src = newImageBase64;
+                }
+                if(input.files[0].size > 2 * 1024 * 1024) {
+                    alert("⚠️ 图片建议小于 2MB，否则可能无法保存。");
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function saveData() {
+            if(!currentFile) return;
+            const newTitle = document.getElementById('modalTitleInput').value;
+            const newDesc = document.getElementById('modalDesc').value;
+
+            localStorage.setItem(currentFile + '_desc', newDesc);
+            localStorage.setItem(currentFile + '_title', newTitle);
+            document.getElementById('title_' + currentFile).innerText = newTitle;
+
+            if(newImageBase64) {
+                try {
+                    localStorage.setItem(currentFile + '_img', newImageBase64);
+                    document.getElementById('img_' + currentFile).src = newImageBase64;
+                } catch (e) {
+                    alert("❌ 图片保存失败，文件太大。");
+                    return;
+                }
+            }
+            closeModal();
+            alert("✅ 修改已保存！");
+        }
+
+        function resetCard() {
+            if(confirm("恢复默认状态？")) {
+                localStorage.removeItem(currentFile + '_title');
+                localStorage.removeItem(currentFile + '_desc');
+                localStorage.removeItem(currentFile + '_img');
+                location.reload();
+            }
+        }
+
+        function closeModal() { document.getElementById('myModal').style.display = "none"; }
+        window.onclick = function(event) { if (event.target == document.getElementById('myModal')) closeModal(); }
+    </script>
+</body>
+</html>
